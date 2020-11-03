@@ -1,420 +1,326 @@
-<!doctype html>
-
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>simple-tabs</title>
+    <style>
+        #wrapper {
+            background-color: #fff;
+            padding: 2rem;
+            margin: 1rem auto;
+            max-width: 1100px;
+        }
+        #upper-container {
+            display: flex;
+            width: 100%;
+        }
+        #laptop {
+            width: 60%;
+        }
+        #upper-paragraph {
+            width: 40%;
+            padding: 3rem;
+        }
+        /* .active {
+            color: royalblue;
+            border-bottom: 2px solid royalblue;
+        } */
+        #tabs {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            margin: 5rem auto;
+            list-style: none;
+            padding: 0.5rem;
+            border-bottom: 0.1rem solid;
+            width: 90%;
+        }
+        .tab-link {
+            border: none;
+            outline: none;            
+            cursor: pointer;
+            font-size: 1.7rem;
+        }
+        /* .active .tab-link:hover {
+            color: royalblue;
+            border-bottom: 2px solid royalblue;
+        } */
+        .showColor {
+            color: royalblue;
+        }
+        .hideColor {
+            color: none;
+        }
 
-  <title>Simple Tabs</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+        /* start of macbook styles */
+        .macbook {
+            padding: 4% 6%;
+            margin: 0 auto;
+            max-width: 800px;
+        }
 
-  <!-- start of CSS -->
-  <style>
-body, html {
-    height: 100%;
-    margin: 0 auto;
-    font-family: Arial;
-    /* background: rgba(0, 0, 0, 0) radial-gradient(circle, #fff 20%, #999) repeat scroll 0 0; */
-}
-    img {
-        width: 100%;
-    }
-      .macbook {
-  padding: 4% 6%;
-  /* margin: 0 auto; */
-  max-width: 800px;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+        .screen {
+            background: #000;
+            border-radius: 3% 3% 0.5% 0.5% / 5%;
+            margin: 0 auto;
+            /* for aspect ratio */
+            position: relative;
+            width: 80%;
+        }
 
-.screen {
-  background: #000;
-  border-radius: 3% 3% 0.5% 0.5% / 5%;
-  margin: 0 auto;
-  /* for aspect ratio */
-  position: relative;
-  width: 80%;
-}
+        .screen:before {
+            border: 2px solid #cacacc;
+            border-radius: 3% 3% 0.5% 0.5% / 5%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
+            content: "";
+            display: block;
+            /* for aspect ratio ~67:100 */
+            padding-top: 67%;
+        }
 
-.screen:before {
-  border: 2px solid #cacacc;
-  border-radius: 3% 3% 0.5% 0.5% / 5%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
-  content: "";
-  display: block;
-  /* for aspect ratio ~67:100 */
-  padding-top: 67%;
-}
+        .screen:after {
+            content: "";
+            border-top: 2px solid rgba(255, 255, 255, 0.15);
+            position: absolute;
+            bottom: 0.75%;
+            left: 0.5%;
+            padding-top: 1%;
+            width: 99%;
+        }
 
-.screen:after {
-  content: "";
-  border-top: 2px solid rgba(255, 255, 255, 0.15);
-  position: absolute;
-  bottom: 0.75%;
-  left: 0.5%;
-  padding-top: 1%;
-  width: 99%;
-}
+        .viewport {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            margin: 4.3% 3.2%;
+            background: #333;
+        }
 
-.viewport {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: 4.3% 3.2%;
-  background: #333;
-}
+        .base {
+            /* for aspect ratio */
+            position: relative;
+            width: 100%;
+        }
 
-.base {
-  /* for aspect ratio */
-  position: relative;
-  width: 100%;
-}
+        .base:before {
+            content: "";
+            display: block;
+            /* for aspect ratio ~33:1000*/
+            padding-top: 3.3%;
+            /* stylin */
+            background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
+            border-radius: 0 0 10% 10%/ 0 0 50% 50%;
+        }
 
-.base:before {
-  content: "";
-  display: block;
-  /* for aspect ratio ~33:1000*/
-  padding-top: 3.3%;
-  /* stylin */
-  background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
-  border-radius: 0 0 10% 10%/ 0 0 50% 50%;
-}
+        .base::after {
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
+            content: "";
+            height: 53%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
 
-.base::after {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
-  content: "";
-  height: 53%;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
+        .notch {
+            background: #ddd;
+            border-radius: 0 0 7% 7% / 0 0 95% 95%;
+            box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -3.5%;
+            z-index: 2;
+            /* for aspect ratio */
+            position: relative;
+            width: 14%;
+        }
 
-.notch {
-  background: #ddd;
-  border-radius: 0 0 7% 7% / 0 0 95% 95%;
-  box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -3.5%;
-  z-index: 2;
-  /* for aspect ratio */
-  position: relative;
-  width: 14%;
-}
+        .notch:before {
+            content: "";
+            display: block;
+            /* for aspect ratio ~1:10 */
+            padding-top: 10%;
+        }
 
-.notch:before {
-  content: "";
-  display: block;
-  /* for aspect ratio ~1:10 */
-  padding-top: 10%;
-}
-/* #container {
-    display: flex;
-    flex-direction: column;
-}
-#summary {
-    display: flex;
-    flex-direction: row;
-} */
-  </style>
-<!-- <style>
-body, html {
-  height: 100%;
-  margin: 0 auto;
-  font-family: Arial;
-  /* background: rgba(0, 0, 0, 0) radial-gradient(circle, #fff 20%, #999) repeat scroll 0 0; */
-}
-img {
-    width: 100%;
-}
-
-.tabs {
-    display: flex;
-    margin: 1rem;
-    padding: 1rem;
-    justify-content: space-evenly;
-    list-style: none;
-}
-
-.macbook {
-  padding: 4% 6%;
-  /* margin: 0 auto; */
-  max-width: 800px;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.screen {
-  background: #000;
-  border-radius: 3% 3% 0.5% 0.5% / 5%;
-  margin: 0 auto;
-  /* for aspect ratio */
-  position: relative;
-  width: 80%;
-}
-
-.screen:before {
-  border: 2px solid #cacacc;
-  border-radius: 3% 3% 0.5% 0.5% / 5%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
-  content: "";
-  display: block;
-  /* for aspect ratio ~67:100 */
-  padding-top: 67%;
-}
-
-.screen:after {
-  content: "";
-  border-top: 2px solid rgba(255, 255, 255, 0.15);
-  position: absolute;
-  bottom: 0.75%;
-  left: 0.5%;
-  padding-top: 1%;
-  width: 99%;
-}
-
-.viewport {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: 4.3% 3.2%;
-  background: #333;
-}
-
-.base {
-  /* for aspect ratio */
-  position: relative;
-  width: 100%;
-}
-
-.base:before {
-  content: "";
-  display: block;
-  /* for aspect ratio ~33:1000*/
-  padding-top: 3.3%;
-  /* stylin */
-  background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
-  border-radius: 0 0 10% 10%/ 0 0 50% 50%;
-}
-
-.base::after {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
-  content: "";
-  height: 53%;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
-
-.notch {
-  background: #ddd;
-  border-radius: 0 0 7% 7% / 0 0 95% 95%;
-  box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -3.5%;
-  z-index: 2;
-  /* for aspect ratio */
-  position: relative;
-  width: 14%;
-}
-
-.notch:before {
-  content: "";
-  display: block;
-  /* for aspect ratio ~1:10 */
-  padding-top: 10%;
-}
-
-/* Style tab links */
-.tablink {
-  background-color: #444;
-  text-decoration: underline;
-  border-bottom: 1px solid white;
-  color: #f1f1f1;
-    float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
-}
-
-.tablink:hover {
-    /* color: #333; */
-    text-decoration: underline white;
-    color: white;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: white;
-  background-color: #222;
-  display: none;
-  /* padding: 100px 20px; */
-  /* padding: 1rem; */
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.texttabcontent {
-    color: #333;
-    margin: 1rem auto;
-    overflow: hidden;
-}
-
-.image {
-    width: 100%;
-    height: 100%;
-}
-
-#Home {
-    color: black;
-    display: flex;
-}
-#News {
-    color: white;
-}
-#Contact {
-    color: white;
-}
-#About {
-    color: white;
-} 
-#summary {
-    /* display: flex; */
-}
-</style> -->
+        /* MEDIA QUERIES FOR SMALLER PHONE SCREENS OVER 768px */
+        @media only screen and (max-width: 768px){
+            #wrapper { 
+                width: 80vw;
+                padding: 2rem;
+            }
+            #upper-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                padding: 0;
+            }
+            #laptop {
+                width: 100%;
+            }
+            #upper-paragraph {
+                padding: 1rem;
+                margin: 1rem 0;
+                width: 100%;
+            }
+            #tabs {
+                margin: 1rem auto 3rem auto;
+                width: 100%;
+            }
+            .tab-link {
+                font-size: 1.3rem;
+            }
+        }
+        /* END OF MEDIA QUERY */
+    </style>
 </head>
-<!-- end of CSS -->
-
-
-<body>    
-
-    <div id='container'>
-        <!-- start of summary -->
-        <div id='summary'>
-            <div class="macbook" id='macbook'>
-                <div class="screen">
-                    <div class="viewport" >
-                        <div id="Home" class="tabcontent">
-                        <img src='https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn.jpg' class='image'/>
+<body>
+    <!-- WRAPPER DIV -->
+    <div id='wrapper'>
+        <div class='tab-content' id='manage-risk'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport">
+                            <!-- <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/photo/fogs-over-the-mountain-2334654/" style="border:none;" title="Flowers"></iframe> -->
+                            <video width="100%" height="100%" controls aria-controls="play">
+                                <source src="video#1.mp4" type="video/mp4">
+                                <source src="/videos/video#1.webm" type="video/webm">
+                                <source src="./videos/video#1.ogg" type="video/ogg">
+                              Your browser does not support the video tag.
+                              </video>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
                     </div>
-                        
-                    <div id="News" class='tabcontent'>
-                        <img src='https://i.pinimg.com/originals/dd/76/f5/dd76f5e507c2a3506a5e4a60684d0727.jpg' class='image'/>
-                    </div>
-                    
-                    <div id="Contact" class="tabcontent">
-                        <img src='https://images.homedepot-static.com/productImages/4c249ff0-b5a4-4c93-b811-a0222973d920/svn/globalrose-flower-bouquets-50-red-roses-vd-64_1000.jpg' class='image'/>
-                    </div>              
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
                 </div>
             </div>
-            <div class="base"></div>
-            <div class="notch"></div>  
-            <div id="summary-paragraph">
-                <p>
-                    Grog blossom Pieces of Eight weigh anchor spyglass gangway avast hail-shot lateen sail Pirate Round gun.
-                    Parley blow the man down furl bilge rat yawl league Pieces of Eight tender Buccaneer scuttle. 
-                    Sink me quarter trysail poop deck bilge water scurvy case shot red ensign bucko Barbary Coast.
+        </div>
+        <div class='tab-content' id='benefits'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport" style='color: white;'>
+                            <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/video/woman-holding-her-dog-2796076/" style="border:none;" title="Flowers"></iframe>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
+                    </div>
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='tab-content' id='use-cases'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport" style='color: white;'>
+                            <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/video/pack-of-money-inside-the-bottle-3752545/" style="border:none;" title="Flowers"></iframe>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
+                    </div>
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- TABS -->
+        <div id='tab-container'>
+            <ul id='tabs'>
+                <li class='tab-link' id='defaultOpen' onClick="openPage('manage-risk', 'manage-risk-2', this, 'royalBlue', event)">
+                    Manage Risk
+                </li>
+                <li class='tab-link' onClick="openPage('benefits', 'benefits-2', this, 'royalBlue', event)">
+                    Benefits
+                </li>
+                <li class='tab-link' onClick="openPage('use-cases', 'use-cases-2', this, 'royalBlue', event)">
+                    Use Cases
+                </li>
+            </ul>
+        </div>
+        <!-- LOWER-CONTENT -->
+        <div class='tab-content' id='manage-risk-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
                 </p>
             </div>
         </div>
-        <!-- end of summary -->
-        <!-- start of tabs -->
-        <div id="tab-container">
-            <ul id='tabs'>
-                <li class="tablink" onclick="openPage('Home', this, 'royalblue')" id="defaultOpen">Home</li>
-                <li class="tablink" onclick="openPage('News', this, 'royalblue')">News</li>
-                <li class="tablink" onclick="openPage('Contact', this, 'royalblue')">Contact</li>
-            </ul>
-        </div>
-        <!-- end of tabs -->
-        <!-- start of info-paragraph -->
-        <div id="info-paragraph">
-            <p id="bold-text">
-                Fire in the hole Buccaneer Letter of Marque lookout cackle fruit port pressgang Jack Ketch to go on account aft. Shiver me timbers scuttle measured fer yer chains league
-            </p>
-            <p id="paragraph-text">
-                Grog blossom Pieces of Eight weigh anchor spyglass gangway avast hail-shot lateen sail Pirate Round gun. Parley blow the man down furl bilge rat yawl league Pieces of Eight tender Buccaneer scuttle. Sink me quarter trysail poop deck bilge water scurvy case shot red ensign bucko Barbary Coast.
-                Fire in the hole Buccaneer Letter of Marque lookout cackle fruit port pressgang Jack Ketch to go on account aft. Shiver me timbers scuttle measured fer yer chains league Barbary Coast cog crimp lad furl killick. Yellow Jack smartly blow the man down lanyard list Sail ho ho squiffy yard Sink me.
-                Bring a spring upon her cable run a rig grog blossom cutlass long boat flogging bounty Arr Buccaneer overhaul. Pieces of Eight maroon clap of thunder pinnace avast Sea Legs ahoy fore belay bilge water. Hands tender pirate snow aft Plate Fleet stern port Barbary Coast Corsair.
-            </p>
-        </div>
-    </div>
-    <!-- <div id='container'>
-        <div class="macbook" id='macbook'>
-            <div class="screen">
-                <div class="viewport" >
-                    <div id="Home" class="tabcontent">
-                    <img src='https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn.jpg' class='image'/>
-                    <div class='paragraph-text'>
-                        <p>page #1</p>
-                    </div>
-                </div>
-                    
-                <div id="News" class='tabcontent'>
-                    <img src='https://i.pinimg.com/originals/dd/76/f5/dd76f5e507c2a3506a5e4a60684d0727.jpg' class='image'/>
-                    <div class='paragraph-text'>
-                        <p>page #2</p>
-                    </div>
-                </div>
-                
-                <div id="Contact" class="tabcontent">
-                    <img src='https://images.homedepot-static.com/productImages/4c249ff0-b5a4-4c93-b811-a0222973d920/svn/globalrose-flower-bouquets-50-red-roses-vd-64_1000.jpg' class='image'/>
-                    <div class='paragraph-text'>
-                        <p>page #3</p>
-                    </div>
-                </div>
-                
+        <div class='tab-content' id='benefits-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
+                </p>
             </div>
         </div>
-        <div class="base"></div>
-        <div class="notch"></div>   
-        
-        <ul id='tabs'>
-            <li class="tablink" id='' onclick="openPage('Home', this, 'royalblue')" id="defaultOpen">Home</li>
-            <li class="tablink" onclick="openPage('News', this, 'royalblue')">News</li>
-            <li class="tablink" onclick="openPage('Contact', this, 'royalblue')">Contact</li>
-        </ul>
-    </div> -->
-
+        <div class='tab-content' id='use-cases-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
-</html>
 
-<!-- start of javascript -->
-<script>
-    function openPage(pageName, elmnt, color) {
-        // Hide all elements with class="tabcontent" by default */
+<!-- JAVASCRIPT -->
+<script type='text/javascript'>
+
+    // open page function
+    function openPage(pageName, pageName2, elmnt, color, event) {
         var i, tabcontent, tablinks;
-        // tab content
-        tabcontent = document.getElementsByClassName("tabcontent");
+        // Hide all elements with class="tabcontent" by default */
+        tabcontent = document.getElementsByClassName("tab-content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
         
         // Remove the background color of all tablinks/buttons
-        tablinks = document.getElementsByClassName("tablink");
+        tablinks = document.getElementsByClassName("tab-link");
         for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].style.backgroundColor = "";
+            // tabsLinks[i].style.color = color ? color : ''
+            // tablinks[i].style.color = 'none;'
+            // event.currentTarget.className += " active";
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
 
         // Show the specific tab content
         document.getElementById(pageName).style.display = "block";
-
+        document.getElementById(pageName2).style.display = "block";
+     
         // Add the specific color to the button used to open the tab content
-        elmnt.style.color = color;
+        elmnt.style.color = color
+        event.currentTarget.className += " active";
     }
-
+    
     // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
+    const openTab = document.getElementById("defaultOpen").click()
+    
 </script>
+</html>

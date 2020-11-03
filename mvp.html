@@ -1,0 +1,420 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Simple Tabs</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <!-- start of CSS -->
+  <style>
+body, html {
+    height: 100%;
+    margin: 0 auto;
+    font-family: Arial;
+    /* background: rgba(0, 0, 0, 0) radial-gradient(circle, #fff 20%, #999) repeat scroll 0 0; */
+}
+    img {
+        width: 100%;
+    }
+      .macbook {
+  padding: 4% 6%;
+  /* margin: 0 auto; */
+  max-width: 800px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.screen {
+  background: #000;
+  border-radius: 3% 3% 0.5% 0.5% / 5%;
+  margin: 0 auto;
+  /* for aspect ratio */
+  position: relative;
+  width: 80%;
+}
+
+.screen:before {
+  border: 2px solid #cacacc;
+  border-radius: 3% 3% 0.5% 0.5% / 5%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
+  content: "";
+  display: block;
+  /* for aspect ratio ~67:100 */
+  padding-top: 67%;
+}
+
+.screen:after {
+  content: "";
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  position: absolute;
+  bottom: 0.75%;
+  left: 0.5%;
+  padding-top: 1%;
+  width: 99%;
+}
+
+.viewport {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 4.3% 3.2%;
+  background: #333;
+}
+
+.base {
+  /* for aspect ratio */
+  position: relative;
+  width: 100%;
+}
+
+.base:before {
+  content: "";
+  display: block;
+  /* for aspect ratio ~33:1000*/
+  padding-top: 3.3%;
+  /* stylin */
+  background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
+  border-radius: 0 0 10% 10%/ 0 0 50% 50%;
+}
+
+.base::after {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
+  content: "";
+  height: 53%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.notch {
+  background: #ddd;
+  border-radius: 0 0 7% 7% / 0 0 95% 95%;
+  box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -3.5%;
+  z-index: 2;
+  /* for aspect ratio */
+  position: relative;
+  width: 14%;
+}
+
+.notch:before {
+  content: "";
+  display: block;
+  /* for aspect ratio ~1:10 */
+  padding-top: 10%;
+}
+/* #container {
+    display: flex;
+    flex-direction: column;
+}
+#summary {
+    display: flex;
+    flex-direction: row;
+} */
+  </style>
+<!-- <style>
+body, html {
+  height: 100%;
+  margin: 0 auto;
+  font-family: Arial;
+  /* background: rgba(0, 0, 0, 0) radial-gradient(circle, #fff 20%, #999) repeat scroll 0 0; */
+}
+img {
+    width: 100%;
+}
+
+.tabs {
+    display: flex;
+    margin: 1rem;
+    padding: 1rem;
+    justify-content: space-evenly;
+    list-style: none;
+}
+
+.macbook {
+  padding: 4% 6%;
+  /* margin: 0 auto; */
+  max-width: 800px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.screen {
+  background: #000;
+  border-radius: 3% 3% 0.5% 0.5% / 5%;
+  margin: 0 auto;
+  /* for aspect ratio */
+  position: relative;
+  width: 80%;
+}
+
+.screen:before {
+  border: 2px solid #cacacc;
+  border-radius: 3% 3% 0.5% 0.5% / 5%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
+  content: "";
+  display: block;
+  /* for aspect ratio ~67:100 */
+  padding-top: 67%;
+}
+
+.screen:after {
+  content: "";
+  border-top: 2px solid rgba(255, 255, 255, 0.15);
+  position: absolute;
+  bottom: 0.75%;
+  left: 0.5%;
+  padding-top: 1%;
+  width: 99%;
+}
+
+.viewport {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 4.3% 3.2%;
+  background: #333;
+}
+
+.base {
+  /* for aspect ratio */
+  position: relative;
+  width: 100%;
+}
+
+.base:before {
+  content: "";
+  display: block;
+  /* for aspect ratio ~33:1000*/
+  padding-top: 3.3%;
+  /* stylin */
+  background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
+  border-radius: 0 0 10% 10%/ 0 0 50% 50%;
+}
+
+.base::after {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
+  content: "";
+  height: 53%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.notch {
+  background: #ddd;
+  border-radius: 0 0 7% 7% / 0 0 95% 95%;
+  box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -3.5%;
+  z-index: 2;
+  /* for aspect ratio */
+  position: relative;
+  width: 14%;
+}
+
+.notch:before {
+  content: "";
+  display: block;
+  /* for aspect ratio ~1:10 */
+  padding-top: 10%;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #444;
+  text-decoration: underline;
+  border-bottom: 1px solid white;
+  color: #f1f1f1;
+    float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+    /* color: #333; */
+    text-decoration: underline white;
+    color: white;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  background-color: #222;
+  display: none;
+  /* padding: 100px 20px; */
+  /* padding: 1rem; */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.texttabcontent {
+    color: #333;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+}
+
+#Home {
+    color: black;
+    display: flex;
+}
+#News {
+    color: white;
+}
+#Contact {
+    color: white;
+}
+#About {
+    color: white;
+} 
+#summary {
+    /* display: flex; */
+}
+</style> -->
+</head>
+<!-- end of CSS -->
+
+
+<body>    
+
+    <div id='container'>
+        <!-- start of summary -->
+        <div id='summary'>
+            <div class="macbook" id='macbook'>
+                <div class="screen">
+                    <div class="viewport" >
+                        <div id="Home" class="tabcontent">
+                        <img src='https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn.jpg' class='image'/>
+                    </div>
+                        
+                    <div id="News" class='tabcontent'>
+                        <img src='https://i.pinimg.com/originals/dd/76/f5/dd76f5e507c2a3506a5e4a60684d0727.jpg' class='image'/>
+                    </div>
+                    
+                    <div id="Contact" class="tabcontent">
+                        <img src='https://images.homedepot-static.com/productImages/4c249ff0-b5a4-4c93-b811-a0222973d920/svn/globalrose-flower-bouquets-50-red-roses-vd-64_1000.jpg' class='image'/>
+                    </div>              
+                </div>
+            </div>
+            <div class="base"></div>
+            <div class="notch"></div>  
+            <div id="summary-paragraph">
+                <p>
+                    Grog blossom Pieces of Eight weigh anchor spyglass gangway avast hail-shot lateen sail Pirate Round gun.
+                    Parley blow the man down furl bilge rat yawl league Pieces of Eight tender Buccaneer scuttle. 
+                    Sink me quarter trysail poop deck bilge water scurvy case shot red ensign bucko Barbary Coast.
+                </p>
+            </div>
+        </div>
+        <!-- end of summary -->
+        <!-- start of tabs -->
+        <div id="tab-container">
+            <ul id='tabs'>
+                <li class="tablink" onclick="openPage('Home', this, 'royalblue')" id="defaultOpen">Home</li>
+                <li class="tablink" onclick="openPage('News', this, 'royalblue')">News</li>
+                <li class="tablink" onclick="openPage('Contact', this, 'royalblue')">Contact</li>
+            </ul>
+        </div>
+        <!-- end of tabs -->
+        <!-- start of info-paragraph -->
+        <div id="info-paragraph">
+            <p id="bold-text">
+                Fire in the hole Buccaneer Letter of Marque lookout cackle fruit port pressgang Jack Ketch to go on account aft. Shiver me timbers scuttle measured fer yer chains league
+            </p>
+            <p id="paragraph-text">
+                Grog blossom Pieces of Eight weigh anchor spyglass gangway avast hail-shot lateen sail Pirate Round gun. Parley blow the man down furl bilge rat yawl league Pieces of Eight tender Buccaneer scuttle. Sink me quarter trysail poop deck bilge water scurvy case shot red ensign bucko Barbary Coast.
+                Fire in the hole Buccaneer Letter of Marque lookout cackle fruit port pressgang Jack Ketch to go on account aft. Shiver me timbers scuttle measured fer yer chains league Barbary Coast cog crimp lad furl killick. Yellow Jack smartly blow the man down lanyard list Sail ho ho squiffy yard Sink me.
+                Bring a spring upon her cable run a rig grog blossom cutlass long boat flogging bounty Arr Buccaneer overhaul. Pieces of Eight maroon clap of thunder pinnace avast Sea Legs ahoy fore belay bilge water. Hands tender pirate snow aft Plate Fleet stern port Barbary Coast Corsair.
+            </p>
+        </div>
+    </div>
+    <!-- <div id='container'>
+        <div class="macbook" id='macbook'>
+            <div class="screen">
+                <div class="viewport" >
+                    <div id="Home" class="tabcontent">
+                    <img src='https://pbs.twimg.com/profile_images/883859744498176000/pjEHfbdn.jpg' class='image'/>
+                    <div class='paragraph-text'>
+                        <p>page #1</p>
+                    </div>
+                </div>
+                    
+                <div id="News" class='tabcontent'>
+                    <img src='https://i.pinimg.com/originals/dd/76/f5/dd76f5e507c2a3506a5e4a60684d0727.jpg' class='image'/>
+                    <div class='paragraph-text'>
+                        <p>page #2</p>
+                    </div>
+                </div>
+                
+                <div id="Contact" class="tabcontent">
+                    <img src='https://images.homedepot-static.com/productImages/4c249ff0-b5a4-4c93-b811-a0222973d920/svn/globalrose-flower-bouquets-50-red-roses-vd-64_1000.jpg' class='image'/>
+                    <div class='paragraph-text'>
+                        <p>page #3</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="base"></div>
+        <div class="notch"></div>   
+        
+        <ul id='tabs'>
+            <li class="tablink" id='' onclick="openPage('Home', this, 'royalblue')" id="defaultOpen">Home</li>
+            <li class="tablink" onclick="openPage('News', this, 'royalblue')">News</li>
+            <li class="tablink" onclick="openPage('Contact', this, 'royalblue')">Contact</li>
+        </ul>
+    </div> -->
+
+</body>
+</html>
+
+<!-- start of javascript -->
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        // tab content
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.color = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>

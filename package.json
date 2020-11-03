@@ -1,14 +1,14 @@
 {
   "name": "simple-tabs",
   "version": "1.0.0",
-  "description": "simple tabs with html, css and vanilla javascript",
-  "main": "index.js",
+  "description": "Simple tabs with html, css and vanilla javascript",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bobbyhalljr/simple-tabs.git"
+    "url": "https://github.com/bobbyhalljr/simple-tabs.git"
   },
   "keywords": [
     "tabs",
@@ -20,7 +20,7 @@
   "author": "Bobby Hall Jr",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bobbyhalljr/simple-tabs/issues"
+    "url": "https://github.com/bobbyhalljr/simple-tabs"
   },
-  "homepage": "https://github.com/bobbyhalljr/simple-tabs#readme"
+  "homepage": "https://github.com/bobbyhalljr/simple-tabs"
 }
