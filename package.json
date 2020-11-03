@@ -4,7 +4,7 @@
   "description": "Simple tabs with html, css and vanilla javascript",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "live-server"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   "author": "Bobby Hall Jr",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bobbyhalljr/simple-tabs"
+    "url": "https://github.com/bobbyhalljr/simple-tabs/issues"
   },
-  "homepage": "https://github.com/bobbyhalljr/simple-tabs"
+  "homepage": "https://simple-tabs.vercel.app"
 }
