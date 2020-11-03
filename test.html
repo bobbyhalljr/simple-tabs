@@ -1,0 +1,326 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>simple-tabs</title>
+    <style>
+        #wrapper {
+            background-color: #fff;
+            padding: 2rem;
+            margin: 1rem auto;
+            max-width: 1100px;
+        }
+        #upper-container {
+            display: flex;
+            width: 100%;
+        }
+        #laptop {
+            width: 60%;
+        }
+        #upper-paragraph {
+            width: 40%;
+            padding: 3rem;
+        }
+        /* .active {
+            color: royalblue;
+            border-bottom: 2px solid royalblue;
+        } */
+        #tabs {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            margin: 5rem auto;
+            list-style: none;
+            padding: 0.5rem;
+            border-bottom: 0.1rem solid;
+            width: 90%;
+        }
+        .tab-link {
+            border: none;
+            outline: none;            
+            cursor: pointer;
+            font-size: 1.7rem;
+        }
+        /* .active .tab-link:hover {
+            color: royalblue;
+            border-bottom: 2px solid royalblue;
+        } */
+        .showColor {
+            color: royalblue;
+        }
+        .hideColor {
+            color: none;
+        }
+
+        /* start of macbook styles */
+        .macbook {
+            padding: 4% 6%;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .screen {
+            background: #000;
+            border-radius: 3% 3% 0.5% 0.5% / 5%;
+            margin: 0 auto;
+            /* for aspect ratio */
+            position: relative;
+            width: 80%;
+        }
+
+        .screen:before {
+            border: 2px solid #cacacc;
+            border-radius: 3% 3% 0.5% 0.5% / 5%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
+            content: "";
+            display: block;
+            /* for aspect ratio ~67:100 */
+            padding-top: 67%;
+        }
+
+        .screen:after {
+            content: "";
+            border-top: 2px solid rgba(255, 255, 255, 0.15);
+            position: absolute;
+            bottom: 0.75%;
+            left: 0.5%;
+            padding-top: 1%;
+            width: 99%;
+        }
+
+        .viewport {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            margin: 4.3% 3.2%;
+            background: #333;
+        }
+
+        .base {
+            /* for aspect ratio */
+            position: relative;
+            width: 100%;
+        }
+
+        .base:before {
+            content: "";
+            display: block;
+            /* for aspect ratio ~33:1000*/
+            padding-top: 3.3%;
+            /* stylin */
+            background: linear-gradient(#eaeced, #edeef0 55%, #fff 55%, #8a8b8f 56%, #999ba0 61%, #4B4B4F 84%, #262627 89%, rgba(0, 0, 0, .01) 98%);
+            border-radius: 0 0 10% 10%/ 0 0 50% 50%;
+        }
+
+        .base::after {
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 0.5%, rgba(0, 0, 0, 0.4) 3.3%, transparent 15%, rgba(255, 255, 255, 0.8) 50%, transparent 85%, rgba(0, 0, 0, 0.4) 96.7%, rgba(255, 255, 255, 0.8) 99.5%, rgba(0, 0, 0, 0.5) 100%);
+            content: "";
+            height: 53%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .notch {
+            background: #ddd;
+            border-radius: 0 0 7% 7% / 0 0 95% 95%;
+            box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -3.5%;
+            z-index: 2;
+            /* for aspect ratio */
+            position: relative;
+            width: 14%;
+        }
+
+        .notch:before {
+            content: "";
+            display: block;
+            /* for aspect ratio ~1:10 */
+            padding-top: 10%;
+        }
+
+        /* MEDIA QUERIES FOR SMALLER PHONE SCREENS OVER 768px */
+        @media only screen and (max-width: 768px){
+            #wrapper { 
+                width: 80vw;
+                padding: 2rem;
+            }
+            #upper-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                padding: 0;
+            }
+            #laptop {
+                width: 100%;
+            }
+            #upper-paragraph {
+                padding: 1rem;
+                margin: 1rem 0;
+                width: 100%;
+            }
+            #tabs {
+                margin: 1rem auto 3rem auto;
+                width: 100%;
+            }
+            .tab-link {
+                font-size: 1.3rem;
+            }
+        }
+        /* END OF MEDIA QUERY */
+    </style>
+</head>
+<body>
+    <!-- WRAPPER DIV -->
+    <div id='wrapper'>
+        <div class='tab-content' id='manage-risk'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport">
+                            <!-- <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/photo/fogs-over-the-mountain-2334654/" style="border:none;" title="Flowers"></iframe> -->
+                            <video width="100%" height="100%" controls aria-controls="play">
+                                <source src="video#1.mp4" type="video/mp4">
+                                <source src="/videos/video#1.webm" type="video/webm">
+                                <source src="./videos/video#1.ogg" type="video/ogg">
+                              Your browser does not support the video tag.
+                              </video>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
+                    </div>
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='tab-content' id='benefits'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport" style='color: white;'>
+                            <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/video/woman-holding-her-dog-2796076/" style="border:none;" title="Flowers"></iframe>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
+                    </div>
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class='tab-content' id='use-cases'>
+            <div id='upper-container'>
+                <div id='laptop'>
+                    <!-- start of laptop -->
+                    <div class="macbook">
+                        <div class="screen">
+                          <div class="viewport" style='color: white;'>
+                            <iframe id='iFrame' width='100%' height='100%' src="https://www.pexels.com/video/pack-of-money-inside-the-bottle-3752545/" style="border:none;" title="Flowers"></iframe>
+                          </div>
+                        </div>
+                        <div class="base"></div>
+                        <div class="notch"></div>
+                    </div>
+                    <!-- end of laptop -->
+                </div>
+                <div id='upper-paragraph'>
+                    <p class='paragraph'>
+                        #3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- TABS -->
+        <div id='tab-container'>
+            <ul id='tabs'>
+                <li class='tab-link' id='defaultOpen' onClick="openPage('manage-risk', 'manage-risk-2', this, 'royalBlue', event)">
+                    Manage Risk
+                </li>
+                <li class='tab-link' onClick="openPage('benefits', 'benefits-2', this, 'royalBlue', event)">
+                    Benefits
+                </li>
+                <li class='tab-link' onClick="openPage('use-cases', 'use-cases-2', this, 'royalBlue', event)">
+                    Use Cases
+                </li>
+            </ul>
+        </div>
+        <!-- LOWER-CONTENT -->
+        <div class='tab-content' id='manage-risk-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
+                </p>
+            </div>
+        </div>
+        <div class='tab-content' id='benefits-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
+                </p>
+            </div>
+        </div>
+        <div class='tab-content' id='use-cases-2'>
+            <div id='lower-paragraph'>
+                <p class='paragraph'>
+                    #3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras commodo tempor vulputate. Duis malesuada, ipsum id congue eleifend, ex turpis commodo nulla, id eleifend orci libero eu magna. Phasellus mollis metus vitae eros tristique vestibulum. Integer vel velit vitae velit finibus scelerisque. Nam faucibus nisi aliquam ligula efficitur, vitae condimentum nisl ullamcorper. Morbi sollicitudin elit sit amet risus ornare, sed ultricies nulla ornare. Nulla maximus velit ligula, nec efficitur eros porta ut. Nam quis fringilla justo. Donec fermentum enim magna, at elementum diam volutpat ac. Donec sed magna non nisl sodales auctor. Vivamus dignissim orci cursus ex hendrerit convallis a in urna.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- JAVASCRIPT -->
+<script type='text/javascript'>
+
+    // open page function
+    function openPage(pageName, pageName2, elmnt, color, event) {
+        var i, tabcontent, tablinks;
+        // Hide all elements with class="tabcontent" by default */
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            // tabsLinks[i].style.color = color ? color : ''
+            // tablinks[i].style.color = 'none;'
+            // event.currentTarget.className += " active";
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+        document.getElementById(pageName2).style.display = "block";
+     
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.color = color
+        event.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    const openTab = document.getElementById("defaultOpen").click()
+    
+</script>
+</html>
